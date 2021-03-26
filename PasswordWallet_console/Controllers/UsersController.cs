@@ -106,8 +106,7 @@ namespace ScheduleApp.Controllers
             return Ok(model);
         }
         
-        /*
-        [Authorize(Roles = Role.Admin)]*/
+        //update user
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody]UpdateModel model)
         {
@@ -127,7 +126,7 @@ namespace ScheduleApp.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-       /* [Authorize(Roles = Role.Admin)]*/
+       //delete user
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
