@@ -47,7 +47,7 @@ namespace PasswordWallet_console.Services
 
         public IEnumerable<User> GetAll()
         {
-            return _context.Users.Include(a => a.Passwords);
+            return _context.Users.Include(a => a.Passwords).Include(a=>a.Functions).Include(a => a.DataChanges);
         }
 
         public User GetById(int id)
@@ -69,6 +69,7 @@ namespace PasswordWallet_console.Services
 
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+
 
             _context.Users.Add(user);
             _context.SaveChanges();

@@ -67,6 +67,7 @@ namespace ScheduleApp.Controllers
                 Login = user.Login,
                 Token = tokenString
             });
+
         }
 
         [AllowAnonymous]

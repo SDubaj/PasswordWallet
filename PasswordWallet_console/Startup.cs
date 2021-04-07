@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using PasswordWallet_console.Models.Passwords;
 
 namespace PasswordWallet_console
 {
@@ -87,6 +88,7 @@ namespace PasswordWallet_console
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPasswordService, PasswordService>();
+            services.AddScoped<IFunctionService, FunctionService>();
             services.AddCors(); // Make sure you call this previous to AddMvc
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();

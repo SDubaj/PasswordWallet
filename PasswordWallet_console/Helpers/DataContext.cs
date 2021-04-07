@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PasswordWallet_console.Entities;
+using PasswordWallet_console.Models.Passwords;
 
 namespace PasswordWallet_console.Helpers
 {
@@ -21,5 +22,10 @@ namespace PasswordWallet_console.Helpers
 
         public DbSet<User> Users { get; set; }
         public DbSet<Password> Passwords { get; set; }
+        public DbSet<FunctionModel> Functions { get; set; }
+        public DbSet<functionRun> functionRun { get; set; }
+        public DbSet<ActionType> ActionTypes { get; set; }
+        public DbSet<DataChange> DataChanges { get; set; }
+
     }
 }

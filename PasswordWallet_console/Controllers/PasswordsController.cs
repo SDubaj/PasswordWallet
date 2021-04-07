@@ -95,6 +95,38 @@ namespace PasswordWallet_console.Controllers
 
 
         }
+
+        
+
+             
+        /* [Authorize(Roles = Role.Admin)]*/
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _passwordService.Delete(id);
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody]UpdatePasswordModel model)
+        {
+            // map model to entity and set id
+            var password = _mapper.Map<Password>(model);
+            password.Id = id;
+
+            try
+            {
+                // update user 
+                _passwordService.Update(password, model.LoginPassword);
+                return Ok();
+            }
+            catch (AppException ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
     }
 }
 
@@ -162,22 +194,9 @@ namespace PasswordWallet_console.Controllers
 
             return CreatedAtAction("GetPassword", new { id = password.Id }, password);
         }
-
+        
         // DELETE: api/Passwords/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Password>> DeletePassword(int id)
-        {
-            var password = await _context.Passwords.FindAsync(id);
-            if (password == null)
-            {
-                return NotFound();
-            }
-
-            _context.Passwords.Remove(password);
-            await _context.SaveChangesAsync();
-
-            return password;
-        }
+       
 
         private bool PasswordExists(int id)
         {
@@ -186,5 +205,6 @@ namespace PasswordWallet_console.Controllers
     }
     
     }
-     */
+     
 
+    */

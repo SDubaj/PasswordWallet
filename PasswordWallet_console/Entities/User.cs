@@ -12,6 +12,8 @@ namespace PasswordWallet_console.Entities
         public byte[] PasswordSalt { get; set; }
         /*public IList<Password> Passwords { get; set; }*/
         public ICollection<Password> Passwords { get; set; }
+        public ICollection<functionRun> Functions { get; set; }
+        public ICollection<DataChange> DataChanges { get; set; }
 
 
     }

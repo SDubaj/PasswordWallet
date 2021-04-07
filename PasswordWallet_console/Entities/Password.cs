@@ -8,7 +8,7 @@ namespace PasswordWallet_console.Entities
 {
     public class Password
     {
-        internal string password;
+        /*internal string password;*/
 
         public int Id { get; set; }
         public string Login { get; set; }
@@ -19,6 +19,6 @@ namespace PasswordWallet_console.Entities
         public string Key { get; set; }
 
         public int UserId { get; set; }
-        public User user { get; set; }
+        /*public User user { get; set; }*/
     }
 }

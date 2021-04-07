@@ -19,6 +19,56 @@ namespace PasswordWallet_console.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("PasswordWallet_console.Entities.ActionType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ActionTypes");
+                });
+
+            modelBuilder.Entity("PasswordWallet_console.Entities.DataChange", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ActionTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ModifiedRecord")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PresentValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PreviousValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Userid")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Userid");
+
+                    b.ToTable("DataChanges");
+                });
+
             modelBuilder.Entity("PasswordWallet_console.Entities.Password", b =>
                 {
                     b.Property<int>("Id")
@@ -69,11 +119,70 @@ namespace PasswordWallet_console.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("PasswordWallet_console.Entities.functionRun", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FunctionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Userid")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Userid");
+
+                    b.ToTable("functionRun");
+                });
+
+            modelBuilder.Entity("PasswordWallet_console.Models.Passwords.FunctionModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Function_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Functions");
+                });
+
+            modelBuilder.Entity("PasswordWallet_console.Entities.DataChange", b =>
+                {
+                    b.HasOne("PasswordWallet_console.Entities.User", null)
+                        .WithMany("DataChanges")
+                        .HasForeignKey("Userid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("PasswordWallet_console.Entities.Password", b =>
                 {
-                    b.HasOne("PasswordWallet_console.Entities.User", "user")
+                    b.HasOne("PasswordWallet_console.Entities.User", null)
                         .WithMany("Passwords")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PasswordWallet_console.Entities.functionRun", b =>
+                {
+                    b.HasOne("PasswordWallet_console.Entities.User", null)
+                        .WithMany("Functions")
+                        .HasForeignKey("Userid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
