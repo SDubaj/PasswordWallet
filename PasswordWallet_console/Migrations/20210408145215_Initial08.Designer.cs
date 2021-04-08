@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PasswordWallet_console.Helpers;
 
 namespace PasswordWallet_console.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210408145215_Initial08")]
+    partial class Initial08
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,24 +71,6 @@ namespace PasswordWallet_console.Migrations
                     b.HasIndex("Userid");
 
                     b.ToTable("DataChanges");
-                });
-
-            modelBuilder.Entity("PasswordWallet_console.Entities.FunctionType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Function_name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Functions");
                 });
 
             modelBuilder.Entity("PasswordWallet_console.Entities.Password", b =>
@@ -149,9 +133,6 @@ namespace PasswordWallet_console.Migrations
                     b.Property<int>("FunctionId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FunctionsId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
@@ -160,11 +141,27 @@ namespace PasswordWallet_console.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FunctionsId");
-
                     b.HasIndex("Userid");
 
                     b.ToTable("functionRun");
+                });
+
+            modelBuilder.Entity("PasswordWallet_console.Models.Passwords.FunctionModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Function_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Functions");
                 });
 
             modelBuilder.Entity("PasswordWallet_console.Entities.DataChange", b =>
@@ -193,10 +190,6 @@ namespace PasswordWallet_console.Migrations
 
             modelBuilder.Entity("PasswordWallet_console.Entities.functionRun", b =>
                 {
-                    b.HasOne("PasswordWallet_console.Entities.FunctionType", "Functions")
-                        .WithMany()
-                        .HasForeignKey("FunctionsId");
-
                     b.HasOne("PasswordWallet_console.Entities.User", null)
                         .WithMany("Functions")
                         .HasForeignKey("Userid")

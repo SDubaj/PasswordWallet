@@ -10,50 +10,50 @@ using PasswordWallet_console.Helpers;
 
 namespace PasswordWallet_console.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class functionRunsController : ControllerBase
+    public class FunctionTypesController : ControllerBase
     {
         private readonly DataContext _context;
 
-        public functionRunsController(DataContext context)
+        public FunctionTypesController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: api/functionRuns
+        // GET: api/FunctionTypes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<functionRun>>> GetfunctionRun()
+        public async Task<ActionResult<IEnumerable<FunctionType>>> GetFunctions()
         {
-            return await _context.functionRun.Include(a => a.Function).ToListAsync();
+            return await _context.Functions.ToListAsync();
         }
 
-        // GET: api/functionRuns/5
+        // GET: api/FunctionTypes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<functionRun>> GetfunctionRun(int id)
+        public async Task<ActionResult<FunctionType>> GetFunctionType(int id)
         {
-            var functionRun = await _context.functionRun.FindAsync(id);
+            var functionType = await _context.Functions.FindAsync(id);
 
-            if (functionRun == null)
+            if (functionType == null)
             {
                 return NotFound();
             }
 
-            return functionRun;
+            return functionType;
         }
 
-        // PUT: api/functionRuns/5
+        // PUT: api/FunctionTypes/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutfunctionRun(int id, functionRun functionRun)
+        public async Task<IActionResult> PutFunctionType(int id, FunctionType functionType)
         {
-            if (id != functionRun.Id)
+            if (id != functionType.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(functionRun).State = EntityState.Modified;
+            _context.Entry(functionType).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace PasswordWallet_console.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!functionRunExists(id))
+                if (!FunctionTypeExists(id))
                 {
                     return NotFound();
                 }
@@ -74,37 +74,37 @@ namespace PasswordWallet_console.Controllers
             return NoContent();
         }
 
-        // POST: api/functionRuns
+        // POST: api/FunctionTypes
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<functionRun>> PostfunctionRun(functionRun functionRun)
+        public async Task<ActionResult<FunctionType>> PostFunctionType(FunctionType functionType)
         {
-            _context.functionRun.Add(functionRun);
+            _context.Functions.Add(functionType);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetfunctionRun", new { id = functionRun.Id }, functionRun);
+            return CreatedAtAction("GetFunctionType", new { id = functionType.Id }, functionType);
         }
 
-        // DELETE: api/functionRuns/5
+        // DELETE: api/FunctionTypes/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<functionRun>> DeletefunctionRun(int id)
+        public async Task<ActionResult<FunctionType>> DeleteFunctionType(int id)
         {
-            var functionRun = await _context.functionRun.FindAsync(id);
-            if (functionRun == null)
+            var functionType = await _context.Functions.FindAsync(id);
+            if (functionType == null)
             {
                 return NotFound();
             }
 
-            _context.functionRun.Remove(functionRun);
+            _context.Functions.Remove(functionType);
             await _context.SaveChangesAsync();
 
-            return functionRun;
+            return functionType;
         }
 
-        private bool functionRunExists(int id)
+        private bool FunctionTypeExists(int id)
         {
-            return _context.functionRun.Any(e => e.Id == id);
+            return _context.Functions.Any(e => e.Id == id);
         }
     }
 }

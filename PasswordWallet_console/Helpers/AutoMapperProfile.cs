@@ -20,6 +20,7 @@ namespace PasswordWallet_console.Helpers
             CreateMap<functionRunModel, functionRun>();
             CreateMap<FunctionType, FunctionModel>();
             CreateMap<ActionTypeModel, ActionType>();
+            CreateMap<FunctionModel, FunctionType>();
             CreateMap<DataChangeModel, DataChange>();
             CreateMap<DataChange, DataChangeModel>();
         }

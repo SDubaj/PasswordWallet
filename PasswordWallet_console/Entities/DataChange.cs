@@ -14,5 +14,7 @@ namespace PasswordWallet_console.Entities
         public DateTime Date { get; set; }
         public int Userid { get; set; }
         public int ActionTypeId { get; set; }
+        public ActionType ActionTypes { get; set; }
+        /*public ICollection<ActionType> ActionTypes { get; set; }*/
     }
 }

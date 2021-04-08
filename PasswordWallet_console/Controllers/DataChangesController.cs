@@ -10,50 +10,50 @@ using PasswordWallet_console.Helpers;
 
 namespace PasswordWallet_console.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class functionRunsController : ControllerBase
+    public class DataChangesController : ControllerBase
     {
         private readonly DataContext _context;
 
-        public functionRunsController(DataContext context)
+        public DataChangesController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: api/functionRuns
+        // GET: api/DataChanges
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<functionRun>>> GetfunctionRun()
+        public async Task<ActionResult<IEnumerable<DataChange>>> GetDataChanges()
         {
-            return await _context.functionRun.Include(a => a.Function).ToListAsync();
+            return await _context.DataChanges.Include(a => a.ActionTypes).ToListAsync();
         }
 
-        // GET: api/functionRuns/5
+        // GET: api/DataChanges/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<functionRun>> GetfunctionRun(int id)
+        public async Task<ActionResult<DataChange>> GetDataChange(int id)
         {
-            var functionRun = await _context.functionRun.FindAsync(id);
+            var dataChange = await _context.DataChanges.Include(a => a.ActionTypes).FirstOrDefaultAsync(i => i.Id == id); ;
 
-            if (functionRun == null)
+            if (dataChange == null)
             {
                 return NotFound();
             }
 
-            return functionRun;
+            return dataChange;
         }
 
-        // PUT: api/functionRuns/5
+        // PUT: api/DataChanges/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutfunctionRun(int id, functionRun functionRun)
+        public async Task<IActionResult> PutDataChange(int id, DataChange dataChange)
         {
-            if (id != functionRun.Id)
+            if (id != dataChange.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(functionRun).State = EntityState.Modified;
+            _context.Entry(dataChange).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace PasswordWallet_console.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!functionRunExists(id))
+                if (!DataChangeExists(id))
                 {
                     return NotFound();
                 }
@@ -74,37 +74,37 @@ namespace PasswordWallet_console.Controllers
             return NoContent();
         }
 
-        // POST: api/functionRuns
+        // POST: api/DataChanges
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<functionRun>> PostfunctionRun(functionRun functionRun)
+        public async Task<ActionResult<DataChange>> PostDataChange(DataChange dataChange)
         {
-            _context.functionRun.Add(functionRun);
+            _context.DataChanges.Add(dataChange);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetfunctionRun", new { id = functionRun.Id }, functionRun);
+            return CreatedAtAction("GetDataChange", new { id = dataChange.Id }, dataChange);
         }
 
-        // DELETE: api/functionRuns/5
+        // DELETE: api/DataChanges/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<functionRun>> DeletefunctionRun(int id)
+        public async Task<ActionResult<DataChange>> DeleteDataChange(int id)
         {
-            var functionRun = await _context.functionRun.FindAsync(id);
-            if (functionRun == null)
+            var dataChange = await _context.DataChanges.FindAsync(id);
+            if (dataChange == null)
             {
                 return NotFound();
             }
 
-            _context.functionRun.Remove(functionRun);
+            _context.DataChanges.Remove(dataChange);
             await _context.SaveChangesAsync();
 
-            return functionRun;
+            return dataChange;
         }
 
-        private bool functionRunExists(int id)
+        private bool DataChangeExists(int id)
         {
-            return _context.functionRun.Any(e => e.Id == id);
+            return _context.DataChanges.Any(e => e.Id == id);
         }
     }
 }

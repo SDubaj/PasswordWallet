@@ -13,7 +13,13 @@ namespace PasswordWallet_console.Models.Passwords
 
         public DateTime Timestamp { get; set; }
         public int Userid { get; set; }
-        public int FunctionId { get; set; }/*
+        public int FunctionId { get; set; }
+        public FunctionType Function { get; set; }
+
+        /*
+        public FunctionType FunctionType { get; set; }*/
+
+        /*
         public IList<FunctionType> FunctionTypes { get; set; }*/
     }
 }

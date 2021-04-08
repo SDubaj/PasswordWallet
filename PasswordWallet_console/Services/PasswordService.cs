@@ -119,7 +119,7 @@ namespace PasswordWallet_console.Services
             dataChangeObject.PreviousValue = passwordParam.LoginPassword;
             dataChangeObject.Userid = myPlayerId;
             dataChangeObject.Date = DateTime.Now;
-            var ActionTypeId= _context.ActionTypes.Where(i => i.Title == "PASSWORD_CHANGE").FirstOrDefault();
+            var ActionTypeId= _context.ActionTypes.Where(i => i.Title == "PASSWORD_UPDATE").FirstOrDefault();
             dataChangeObject.ActionTypeId = ActionTypeId.Id;
             dataChangeObject.ModifiedRecord = passwordParam.Id;
 
