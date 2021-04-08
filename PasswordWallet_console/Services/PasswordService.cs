@@ -56,6 +56,16 @@ namespace PasswordWallet_console.Services
             functionRun.FunctionId = temp.Id;
             _context.functionRun.Add(functionRun);
 
+            //create object with DataChangeModel
+            var dataChangeObject = new DataChange();
+            dataChangeObject.PreviousValue = null;
+            dataChangeObject.Userid = myPlayerId;
+            dataChangeObject.Date = DateTime.Now;
+            var ActionTypeId = _context.ActionTypes.Where(i => i.Title == "PASSWORD_CREATE").FirstOrDefault();
+            dataChangeObject.ActionTypeId = ActionTypeId.Id;
+            dataChangeObject.ModifiedRecord = 0;
+            
+
 
             //check if user already exists
             if (_context.Passwords.Any(x => x.Login == password.Login))
@@ -68,6 +78,8 @@ namespace PasswordWallet_console.Services
             //overwrite object and add to database
             password.LoginPassword = encryptedPassword;
             password.UserId = playerID;
+            dataChangeObject.PresentValue = encryptedPassword;
+            _context.DataChanges.Add(dataChangeObject);
             _context.Passwords.Add(password);
             _context.SaveChanges();
 
@@ -101,6 +113,19 @@ namespace PasswordWallet_console.Services
             var temp = _context.Functions.Where(i => i.Function_name == "DELETE_PASSWORD").FirstOrDefault();
             functionRun.FunctionId = temp.Id;
             _context.functionRun.Add(functionRun);
+
+
+            //create object with DataChangeModel
+            var dataChangeObject = new DataChange();
+            var passwordParams = _context.Passwords.Where(i => i.Id == id).FirstOrDefault();
+            dataChangeObject.PreviousValue = passwordParams.LoginPassword;
+            dataChangeObject.PresentValue = null;
+            dataChangeObject.Userid = myPlayerId;
+            dataChangeObject.Date = DateTime.Now;
+            var ActionTypeId = _context.ActionTypes.Where(i => i.Title == "PASSWORD_DELETE").FirstOrDefault();
+            dataChangeObject.ActionTypeId = ActionTypeId.Id;
+            dataChangeObject.ModifiedRecord = id;
+            _context.DataChanges.Add(dataChangeObject);
 
             //check if password exsist and delete
             var password = _context.Passwords.Find(id);

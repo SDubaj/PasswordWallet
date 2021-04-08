@@ -1,6 +1,7 @@
 using AutoMapper;
 using PasswordWallet_console.Entities;
 using PasswordWallet_console.Models.DataChange;
+using PasswordWallet_console.Models.Functions;
 using PasswordWallet_console.Models.Passwords;
 using PasswordWallet_console.Models.Users;
 
